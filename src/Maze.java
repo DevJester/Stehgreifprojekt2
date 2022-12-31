@@ -46,7 +46,8 @@ public class Maze {
         printMaze();
         moveRunner();
 
-        System.out.println("\nIch bin wie folgt an das Ziel gekommen:");
+        System.out.println("\nIch habe in " + turn + "Schritten ans Ziel gekommen.");
+        System.out.println("\nIch habe wie folgt ans Ziel gefunden:");
         map.printMap();
     }
 
