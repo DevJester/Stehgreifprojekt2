@@ -3,18 +3,12 @@ public class Maze {
 
     char[][] maze;
 
-    BB8 runner;
+    BB8 runner = new BB8();
     Map map;
     int endX;
     int endY;
-    boolean skipMove = false;
+    public Maze(char[][] maze){
 
-
-
-
-
-    public Maze(BB8 runner,char[][] maze){
-        this.runner = runner;
         this.maze = maze;
         this.map = new Map(maze.length, maze[0].length);
     }
@@ -91,25 +85,25 @@ public class Maze {
         switch (runner.getVD()) {
 
             case "north" :
-                if (x + 1 != runner.getPreviousX()  && maze[y][x+1] == ' ' || maze[y][x+1] == 'E') runner.turnRight();
+                if (x + 1 != runner.getPreviousX()  && maze[y][x+1] == ' ' || maze[y][x+1] == 'A') runner.turnRight();
                 else if(maze[y - 1][x] == '.')runner.turnLeft();
-                else if(maze[y-1][x] == ' ' || maze[y-1][x] == 'E') moveRunner();
+                else if(maze[y-1][x] == ' ' || maze[y-1][x] == 'A') moveRunner();
                 break;
 
             case "east" :
-                if(y + 1 != runner.getPreviousY() && maze[y+1][x] == ' ' || maze[y+1][x] == 'E') runner.turnRight();
+                if(y + 1 != runner.getPreviousY() && maze[y+1][x] == ' ' || maze[y+1][x] == 'A') runner.turnRight();
                 else if (maze [y][x+1] == '.')runner.turnLeft();
-                else if(maze[y][x+1] == ' ' || maze[y][x+1] == 'E') moveRunner();
+                else if(maze[y][x+1] == ' ' || maze[y][x+1] == 'A') moveRunner();
                 break;
             case "south" :
-                if( x-1 != runner.getPreviousX() && maze[y][x-1] == ' ' || maze[y][x-1] == 'E' ) runner.turnRight();
+                if( x-1 != runner.getPreviousX() && maze[y][x-1] == ' ' || maze[y][x-1] == 'A' ) runner.turnRight();
                 else if(maze[y + 1][x] == '.')runner.turnLeft();
-                else if(maze[y+1][x] == ' ' || maze[y+1][x] == 'E') moveRunner();
+                else if(maze[y+1][x] == ' ' || maze[y+1][x] == 'A') moveRunner();
                 break;
             case "west" :
-                if( y-1 != runner.getPreviousY() && maze[y-1][x] == ' ' || maze[y-1][x] == 'E')runner.turnRight();
+                if( y-1 != runner.getPreviousY() && maze[y-1][x] == ' ' || maze[y-1][x] == 'A')runner.turnRight();
                 else if(maze[y][x - 1] == '.')runner.turnLeft();
-                else if(maze[y][x-1] == ' ' || maze[y][x-1] == 'E') moveRunner();
+                else if(maze[y][x-1] == ' ' || maze[y][x-1] == 'A') moveRunner();
                 }
 
 
@@ -131,7 +125,7 @@ public class Maze {
     private void setRunnerPosition(){
         int temp;
         for(int i = 0; i < maze.length; i++){
-            if(maze[i][0] == 'A') {
+            if(maze[i][0] == 'B') {
                 runner.setPos(i,0);
             }
         }
@@ -159,7 +153,7 @@ public class Maze {
     private void setEnd(){
         for(int i = 0; i < maze.length; i++) {
             for(int j = 0; j < maze[i].length; j++){
-                if(maze[i][j] == 'E') {
+                if(maze[i][j] == 'A') {
                     endX = j;
                     endY = i;
                 }

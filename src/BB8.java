@@ -9,7 +9,6 @@ public class BB8 {
     private int previousY;
     private String viewingDirection = "north";
     public BB8(){
-
     }
 
 
