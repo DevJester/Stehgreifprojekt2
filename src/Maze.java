@@ -1,19 +1,14 @@
-import java.util.Arrays;
-import java.util.Objects;
-
 //Labyrinth Klasse in der die Funktionen und Werete von den Labyrinten gespeichert werden
 public class Maze {
 
     char[][] maze;
 
-    char[][] path;
-
     BB8 runner;
+    Map map;
     int endX;
     int endY;
+    boolean skipMove = false;
 
-    int lastX;
-    int lastY;
 
 
 
@@ -21,8 +16,10 @@ public class Maze {
     public Maze(BB8 runner,char[][] maze){
         this.runner = runner;
         this.maze = maze;
+        this.map = new Map(maze.length, maze[0].length);
     }
 
+    //Hier wird der Lösungsverlauf gestartet
     public void run(){
         int turn = 0;
         setEnd();
@@ -34,35 +31,35 @@ public class Maze {
         while (!completed()) {
 
             turn++;
-            System.out.println("Schritt " + turn + ":");
-            printMaze();
+            System.out.println("\nSchritt " + turn + ":");
             turnRunner();
             updateRunnerPosition();
-            moveRunner();
+            map.addToMap(runner.getPosY(),runner.getPosX(),runner.printCharacter());
+            printMaze();
 
 
             try {
-                Thread.sleep(750);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-
         }
 
-
         turn++;
-        System.out.println("\n\nSchritt " + turn+ ":");
-       // lookForPath();
+        System.out.println("\nSchritt " + turn+ ":");
         updateRunnerPosition();
         printMaze();
         moveRunner();
 
+        System.out.println("\nIch bin wie folgt an das Ziel gekommen:");
+        map.printMap();
     }
+
+    //Funktion, die BB8 bewegt
     private void moveRunner(){
         int tempX = runner.getPosX();
         int tempY = runner.getPosY();
-
 
         switch (runner.getVD()) {
             case "north" : tempY -= 1;
@@ -74,26 +71,19 @@ public class Maze {
             case "west" : tempX -= 1;
         }
 
-
-
-        if(tempY < 0 || tempY > maze.length - 1|| tempX < 0 || tempX > maze[0].length - 1 || maze[tempY][tempX] == '.') {
+        if(tempY < 0 || tempY > maze.length - 1|| tempX < 0 || tempX > maze[0].length - 1) {
             updateRunnerPosition();
-
             return;
         }
 
-
         if(tempY != runner.getPosY() || tempX != runner.getPosX()) maze[runner.getPosY()][runner.getPosX()] = ' ';
 
-
-
-        lastX = runner.getPosX();
-        lastY = runner.getPosY();
         runner.setPos(tempY,tempX);
         updateRunnerPosition();
 
     }
 
+    //Methode zum Überprüfen, ob BB8 sich drehen muss, um weiterzukommen
     private void turnRunner(){
         int x = runner.getPosX();
         int y = runner.getPosY();
@@ -101,35 +91,30 @@ public class Maze {
         switch (runner.getVD()) {
 
             case "north" :
-                if (maze[y][x+1] == ' ' || maze[y][x+1] == 'E') runner.turnRight();
-                else if(y - 1 < 0) runner.turnLeft();
+                if (x + 1 != runner.getPreviousX()  && maze[y][x+1] == ' ' || maze[y][x+1] == 'E') runner.turnRight();
                 else if(maze[y - 1][x] == '.')runner.turnLeft();
-
+                else if(maze[y-1][x] == ' ' || maze[y-1][x] == 'E') moveRunner();
                 break;
 
             case "east" :
-                if(maze[y+1][x] == ' ' || maze[y+1][x] == 'E') runner.turnRight();
-                else if(x +1 >= maze.length - 1 ) runner.turnLeft();
+                if(y + 1 != runner.getPreviousY() && maze[y+1][x] == ' ' || maze[y+1][x] == 'E') runner.turnRight();
                 else if (maze [y][x+1] == '.')runner.turnLeft();
+                else if(maze[y][x+1] == ' ' || maze[y][x+1] == 'E') moveRunner();
                 break;
             case "south" :
-                if(maze[y][x-1] == ' ' || maze[y][x-1] == 'E' ) runner.turnRight();
-                else if(y + 1 >= maze.length -1) runner.turnLeft();
+                if( x-1 != runner.getPreviousX() && maze[y][x-1] == ' ' || maze[y][x-1] == 'E' ) runner.turnRight();
                 else if(maze[y + 1][x] == '.')runner.turnLeft();
+                else if(maze[y+1][x] == ' ' || maze[y+1][x] == 'E') moveRunner();
                 break;
             case "west" :
-                if(maze[y-1][x] == ' ' || maze[y-1][x] == 'E')runner.turnRight();
-                else if(x - 1 < 0) runner.turnLeft();
+                if( y-1 != runner.getPreviousY() && maze[y-1][x] == ' ' || maze[y-1][x] == 'E')runner.turnRight();
                 else if(maze[y][x - 1] == '.')runner.turnLeft();
-
-
+                else if(maze[y][x-1] == ' ' || maze[y][x-1] == 'E') moveRunner();
                 }
 
 
 
         }
-
-
 
     //Methode zur Ausgabe des Labyrinths
     private void printMaze(){
@@ -153,12 +138,14 @@ public class Maze {
 
     }
 
+    //Methode die BB8 seine neue Position zuteilt, falls er sich bewegen kann
     private void updateRunnerPosition(){
 
         maze[runner.getPosY()][runner.getPosX()] = runner.printCharacter();
 
     }
 
+    //Methode die überprüft, ob BB8 sich auf dem Ziel befindet
     private boolean completed() {
 
         if(runner.getPosX() == endX && runner.getPosY() == endY) {
@@ -168,8 +155,7 @@ public class Maze {
         return false;
     }
 
-
-
+    //Methode welche die Koordinaten vom ziel bestimmt
     private void setEnd(){
         for(int i = 0; i < maze.length; i++) {
             for(int j = 0; j < maze[i].length; j++){

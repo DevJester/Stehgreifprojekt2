@@ -4,6 +4,9 @@ public class BB8 {
 
     private int posX;
     private int posY;
+
+    private int previousX;
+    private int previousY;
     private String viewingDirection = "north";
     public BB8(){
 
@@ -12,6 +15,8 @@ public class BB8 {
 
 
     public void setPos(int posY, int posX) {
+        previousX = this.posX;
+        previousY = this.posY;
         this.posX = posX;
         this.posY = posY;
     }
@@ -78,6 +83,13 @@ public class BB8 {
             case "west" : viewingDirection = "south";
                 break;
         }
+    }
+
+    public int getPreviousX(){
+        return previousX;
+    }
+    public int getPreviousY(){
+        return previousY;
     }
 
 }
