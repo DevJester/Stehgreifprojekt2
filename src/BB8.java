@@ -14,6 +14,7 @@ public class BB8 {
 
 
 
+    //Methode, um die neue Position von BB8 zu setzen, falls dieser sich bewegt, dazu wird die vorherige position zusätzlich gespeichert
     public void setPos(int posY, int posX) {
         previousX = this.posX;
         previousY = this.posY;
@@ -22,27 +23,24 @@ public class BB8 {
     }
 
 
+    //Methode die die x position  von BB8 im Labyrinth ausgibt
     public int getPosX(){
         return posX;
     }
 
+    //Methode die die y position  von BB8 im Labyrinth ausgibt
     public int getPosY(){
         return posY;
     }
 
-    //Funktion zur aktualisierung der Blickrichtung
-    public void setVD(String viewingDirection){
-        this.viewingDirection = viewingDirection;
-
-    }
-
+    //Funktion, welche die blickrichtung von BB8 ausgibt
     public String getVD(){
         return  viewingDirection;
     }
 
 
 
-    //Funktion zur Ausgabe des Läufers als Figur
+    //Funktion zur Ausgabe von BB8 als char welcher je nach blickrichtung in eine andere Richtung zeigt
     public char printCharacter(){
         char character = ' ';
         switch (viewingDirection) {
@@ -59,6 +57,7 @@ public class BB8 {
     return character;
     }
 
+    //Funktion um die Blickrichtung von BB8 nach rechts zu drehen
     public void turnRight(){
         switch (viewingDirection) {
             case "north" : viewingDirection = "east";
@@ -72,6 +71,7 @@ public class BB8 {
         }
     }
 
+    //Funktion um die Blickrichtung von BB8 nach links zu drehen
     public void turnLeft(){
         switch (viewingDirection) {
             case "north" : viewingDirection = "west";
@@ -85,9 +85,12 @@ public class BB8 {
         }
     }
 
+    //Methode zur ausgabe der vorherigen x Koordinate
     public int getPreviousX(){
         return previousX;
     }
+
+    //Methode zur ausgabe der vorherigen y Koordinate
     public int getPreviousY(){
         return previousY;
     }
