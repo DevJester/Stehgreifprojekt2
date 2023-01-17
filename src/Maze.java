@@ -7,6 +7,11 @@ public class Maze {
     Map map;
     int endX;
     int endY;
+
+    final String north = "north";
+    final String east = "east";
+    final String south = "south";
+    final String west = "west";
     public Maze(char[][] maze){
 
         this.maze = maze;
@@ -85,23 +90,23 @@ public class Maze {
 
         switch (runner.getVD()) {
 
-            case "north" :
+            case north :
                 if (x + 1 != runner.getPreviousX()  && maze[y][x+1] == ' ' || maze[y][x+1] == 'A') runner.turnRight();
                 else if(maze[y - 1][x] == '.')runner.turnLeft();
                 else if(maze[y-1][x] == ' ' || maze[y-1][x] == 'A') moveRunner();
                 break;
 
-            case "east" :
+            case east :
                 if(y + 1 != runner.getPreviousY() && maze[y+1][x] == ' ' || maze[y+1][x] == 'A') runner.turnRight();
                 else if (maze [y][x+1] == '.')runner.turnLeft();
                 else if(maze[y][x+1] == ' ' || maze[y][x+1] == 'A') moveRunner();
                 break;
-            case "south" :
+            case south :
                 if( x-1 != runner.getPreviousX() && maze[y][x-1] == ' ' || maze[y][x-1] == 'A' ) runner.turnRight();
                 else if(maze[y + 1][x] == '.')runner.turnLeft();
                 else if(maze[y+1][x] == ' ' || maze[y+1][x] == 'A') moveRunner();
                 break;
-            case "west" :
+            case west :
                 if( y-1 != runner.getPreviousY() && maze[y-1][x] == ' ' || maze[y-1][x] == 'A')runner.turnRight();
                 else if(maze[y][x - 1] == '.')runner.turnLeft();
                 else if(maze[y][x-1] == ' ' || maze[y][x-1] == 'A') moveRunner();

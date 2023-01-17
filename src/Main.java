@@ -1,3 +1,8 @@
+/*
+ * Stehgreifprojekt 02
+ * Gruppe Suhail Hosseini, Dennis Kreutner, Manuel Weber
+ * GitHub Repo https://github.com/DevJester/Stehgreifprojekt2.git
+ */
 import java.util.Scanner;
 
 public class Main {

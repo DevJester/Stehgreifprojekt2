@@ -1,5 +1,5 @@
 import java.util.Arrays;
-//Map Klasse in der die schritte die von BB8 gemacht wurden gespeichert werden
+//Map Klasse, in der die schritte, die von BB8 gemacht wurden gespeichert werden
 public class Map {
     char[][] map;
 
@@ -32,8 +32,4 @@ public class Map {
     public void addToMap(int y, int x, char runner) {
         map[y][x] = runner;
     }
-
-
-
-
 }
